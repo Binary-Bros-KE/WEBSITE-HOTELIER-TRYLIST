@@ -33,7 +33,7 @@ export function defaultNav(site: Site): NavItem[] {
   const items: NavItem[] = [];
   if (f.rooms) items.push({ slug: "rooms", title: "Rooms & Suites", kind: "SYSTEM" });
   if (f.menu) items.push({ slug: "dining", title: "Dining", kind: "SYSTEM" });
-  if (f.services) items.push({ slug: "wellness", title: "Wellness", kind: "SYSTEM" });
+  if (f.services) items.push({ slug: "services", title: "Wellness", kind: "SYSTEM" });
   if (f.memberships) items.push({ slug: "memberships", title: "Memberships", kind: "SYSTEM" });
   items.push({ slug: "contact", title: "Contact", kind: "SYSTEM" });
   return items;

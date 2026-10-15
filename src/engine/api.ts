@@ -1,9 +1,10 @@
 import "server-only";
 
 import { cache } from "react";
-import { headers } from "next/headers";
+import { cookies, headers } from "next/headers";
 
 import { fixtureFor } from "./fixtures";
+import { PREVIEW_COOKIE } from "./preview";
 import type { MembershipPlan, MenuCategory, Page, RoomType, ServiceCategory, Site } from "./types";
 
 // The only door to tenant data. Every call names the visitor's hostname
@@ -31,11 +32,15 @@ class ApiError extends Error {
   }
 }
 
+/** The platform admin's preview token, if this visitor opened a preview link. */
+const previewToken = cache(async (): Promise<string | null> => (await cookies()).get(PREVIEW_COOKIE)?.value ?? null);
+
 async function apiGet<T>(path: string): Promise<T | null> {
-  const host = await siteHost();
+  const [host, preview] = await Promise.all([siteHost(), previewToken()]);
   const res = await fetch(`${API_URL}/public/site${path}`, {
-    headers: { "x-site-host": host, accept: "application/json" },
-    next: { revalidate: REVALIDATE_SECONDS, tags: [`site:${host}`] },
+    headers: { "x-site-host": host, accept: "application/json", ...(preview ? { "x-site-preview": preview } : {}) },
+    // Previews must always show the latest drafts — never cached.
+    ...(preview ? { cache: "no-store" as const } : { next: { revalidate: REVALIDATE_SECONDS, tags: [`site:${host}`] } }),
   });
   if (res.status === 404) return null;
   if (!res.ok) throw new ApiError(res.status, path);

@@ -2,6 +2,7 @@ import type { Metadata, Viewport } from "next";
 import type { ReactNode } from "react";
 
 import { getSite } from "@/engine/api";
+import { PreviewBadge } from "@/engine/preview";
 import { safeImage } from "@/engine/safe";
 import { themeFor } from "@/themes";
 import "./globals.css";
@@ -42,7 +43,10 @@ export default async function RootLayout({ children }: { children: ReactNode }) 
   const theme = themeFor(site?.theme.key);
   return (
     <html lang="en" className={theme.fontClassName} style={site ? theme.brandStyle(site) : undefined}>
-      <body>{site ? <theme.Layout site={site}>{children}</theme.Layout> : children}</body>
+      <body>
+        {site ? <theme.Layout site={site}>{children}</theme.Layout> : children}
+        {site?.preview && <PreviewBadge />}
+      </body>
     </html>
   );
 }

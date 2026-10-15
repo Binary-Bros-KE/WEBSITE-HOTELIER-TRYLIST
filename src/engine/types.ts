@@ -46,6 +46,8 @@ export type Site = {
   social: Record<string, string>;
   features: SiteFeatures;
   nav: NavItem[];
+  /** True while a platform admin previews drafts (absent on live responses from older APIs). */
+  preview?: boolean;
 };
 
 export type PageKind = "HOME" | "STANDARD" | "SYSTEM";
