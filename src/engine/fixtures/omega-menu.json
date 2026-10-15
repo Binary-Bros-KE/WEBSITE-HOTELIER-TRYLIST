@@ -1,0 +1,436 @@
+[
+  {
+    "id": "mc-breakfast",
+    "name": "Breakfast",
+    "description": "Unhurried mornings, from a light continental plate to the full Omega buffet.",
+    "imageUrl": null,
+    "menuItems": [
+      {
+        "id": "mi1",
+        "name": "Safari Mini Breakfast",
+        "description": null,
+        "photoUrl": null,
+        "price": 600,
+        "isVegetarian": false,
+        "isAvailable": true,
+        "variants": []
+      },
+      {
+        "id": "mi2",
+        "name": "Omega Breakfast Buffet",
+        "description": null,
+        "photoUrl": null,
+        "price": 1200,
+        "isVegetarian": false,
+        "isAvailable": true,
+        "variants": []
+      },
+      {
+        "id": "mi3",
+        "name": "2pcs Fried Eggs",
+        "description": null,
+        "photoUrl": null,
+        "price": 150,
+        "isVegetarian": false,
+        "isAvailable": true,
+        "variants": []
+      },
+      {
+        "id": "mi4",
+        "name": "2pcs Boiled Eggs",
+        "description": null,
+        "photoUrl": null,
+        "price": 150,
+        "isVegetarian": false,
+        "isAvailable": true,
+        "variants": []
+      },
+      {
+        "id": "mi5",
+        "name": "2pcs Scramble Eggs",
+        "description": null,
+        "photoUrl": null,
+        "price": 200,
+        "isVegetarian": false,
+        "isAvailable": true,
+        "variants": []
+      },
+      {
+        "id": "mi6",
+        "name": "Spanish Omelette",
+        "description": null,
+        "photoUrl": null,
+        "price": 300,
+        "isVegetarian": false,
+        "isAvailable": true,
+        "variants": []
+      }
+    ]
+  },
+  {
+    "id": "mc-salads",
+    "name": "Salads",
+    "description": null,
+    "imageUrl": null,
+    "menuItems": [
+      {
+        "id": "mi7",
+        "name": "Kachumbari",
+        "description": null,
+        "photoUrl": null,
+        "price": 300,
+        "isVegetarian": false,
+        "isAvailable": true,
+        "variants": []
+      },
+      {
+        "id": "mi8",
+        "name": "Omega Gardens Salad",
+        "description": null,
+        "photoUrl": null,
+        "price": 400,
+        "isVegetarian": true,
+        "isAvailable": true,
+        "variants": []
+      },
+      {
+        "id": "mi9",
+        "name": "Fruit Salad",
+        "description": null,
+        "photoUrl": null,
+        "price": 300,
+        "isVegetarian": true,
+        "isAvailable": true,
+        "variants": []
+      },
+      {
+        "id": "mi10",
+        "name": "Omega Fish Salad",
+        "description": null,
+        "photoUrl": null,
+        "price": 500,
+        "isVegetarian": true,
+        "isAvailable": true,
+        "variants": []
+      },
+      {
+        "id": "mi11",
+        "name": "Omega Chicken Salad",
+        "description": null,
+        "photoUrl": null,
+        "price": 500,
+        "isVegetarian": true,
+        "isAvailable": true,
+        "variants": []
+      }
+    ]
+  },
+  {
+    "id": "mc-soups",
+    "name": "Soups",
+    "description": null,
+    "imageUrl": null,
+    "menuItems": [
+      {
+        "id": "mi12",
+        "name": "Ossobucco",
+        "description": null,
+        "photoUrl": null,
+        "price": 400,
+        "isVegetarian": false,
+        "isAvailable": true,
+        "variants": []
+      },
+      {
+        "id": "mi13",
+        "name": "Cream of Tomato Soup",
+        "description": null,
+        "photoUrl": null,
+        "price": 400,
+        "isVegetarian": false,
+        "isAvailable": true,
+        "variants": []
+      },
+      {
+        "id": "mi14",
+        "name": "Mixed Vegetable Soup",
+        "description": null,
+        "photoUrl": null,
+        "price": 400,
+        "isVegetarian": true,
+        "isAvailable": true,
+        "variants": []
+      },
+      {
+        "id": "mi15",
+        "name": "Butternut Soup",
+        "description": null,
+        "photoUrl": null,
+        "price": 400,
+        "isVegetarian": false,
+        "isAvailable": true,
+        "variants": []
+      },
+      {
+        "id": "mi16",
+        "name": "Cream of Chicken Soup",
+        "description": null,
+        "photoUrl": null,
+        "price": 400,
+        "isVegetarian": false,
+        "isAvailable": true,
+        "variants": []
+      },
+      {
+        "id": "mi17",
+        "name": "Clear Chicken Soup",
+        "description": null,
+        "photoUrl": null,
+        "price": 400,
+        "isVegetarian": false,
+        "isAvailable": true,
+        "variants": []
+      }
+    ]
+  },
+  {
+    "id": "mc-beef",
+    "name": "Beef",
+    "description": "Prime cuts, slow stews and pepper steak.",
+    "imageUrl": null,
+    "menuItems": [
+      {
+        "id": "mi18",
+        "name": "Beef Fry",
+        "description": null,
+        "photoUrl": null,
+        "price": 700,
+        "isVegetarian": false,
+        "isAvailable": true,
+        "variants": []
+      },
+      {
+        "id": "mi19",
+        "name": "Beef Matoke",
+        "description": null,
+        "photoUrl": null,
+        "price": 700,
+        "isVegetarian": false,
+        "isAvailable": true,
+        "variants": []
+      },
+      {
+        "id": "mi20",
+        "name": "Beef Stew",
+        "description": null,
+        "photoUrl": null,
+        "price": 700,
+        "isVegetarian": false,
+        "isAvailable": true,
+        "variants": []
+      },
+      {
+        "id": "mi21",
+        "name": "Pan-Fried Beef Pepper Steak",
+        "description": null,
+        "photoUrl": null,
+        "price": 800,
+        "isVegetarian": false,
+        "isAvailable": true,
+        "variants": []
+      },
+      {
+        "id": "mi22",
+        "name": "Beef Sirloin Steak",
+        "description": null,
+        "photoUrl": null,
+        "price": 800,
+        "isVegetarian": false,
+        "isAvailable": true,
+        "variants": []
+      },
+      {
+        "id": "mi23",
+        "name": "Beef on Bone (500g)",
+        "description": null,
+        "photoUrl": null,
+        "price": 1000,
+        "isVegetarian": false,
+        "isAvailable": true,
+        "variants": []
+      }
+    ]
+  },
+  {
+    "id": "mc-chicken",
+    "name": "Chicken",
+    "description": null,
+    "imageUrl": null,
+    "menuItems": [
+      {
+        "id": "mi24",
+        "name": "Stir Fry Chicken",
+        "description": null,
+        "photoUrl": null,
+        "price": 800,
+        "isVegetarian": false,
+        "isAvailable": true,
+        "variants": []
+      },
+      {
+        "id": "mi25",
+        "name": "Chicken Curry",
+        "description": null,
+        "photoUrl": null,
+        "price": 800,
+        "isVegetarian": false,
+        "isAvailable": true,
+        "variants": []
+      },
+      {
+        "id": "mi26",
+        "name": "Grilled Chicken Breast",
+        "description": null,
+        "photoUrl": null,
+        "price": 800,
+        "isVegetarian": false,
+        "isAvailable": true,
+        "variants": []
+      },
+      {
+        "id": "mi27",
+        "name": "Chicken Maryland",
+        "description": null,
+        "photoUrl": null,
+        "price": 800,
+        "isVegetarian": false,
+        "isAvailable": true,
+        "variants": []
+      },
+      {
+        "id": "mi28",
+        "name": "Chicken Stew",
+        "description": null,
+        "photoUrl": null,
+        "price": 800,
+        "isVegetarian": false,
+        "isAvailable": true,
+        "variants": []
+      },
+      {
+        "id": "mi29",
+        "name": "Chicken Dry Fry",
+        "description": null,
+        "photoUrl": null,
+        "price": 800,
+        "isVegetarian": false,
+        "isAvailable": true,
+        "variants": []
+      }
+    ]
+  },
+  {
+    "id": "mc-fish",
+    "name": "Fish",
+    "description": "Lake tilapia, grilled or simmered in coconut.",
+    "imageUrl": null,
+    "menuItems": [
+      {
+        "id": "mi30",
+        "name": "Grilled Tilapia Fillet",
+        "description": null,
+        "photoUrl": null,
+        "price": 900,
+        "isVegetarian": false,
+        "isAvailable": true,
+        "variants": []
+      },
+      {
+        "id": "mi31",
+        "name": "Whole Tilapia",
+        "description": null,
+        "photoUrl": null,
+        "price": 900,
+        "isVegetarian": false,
+        "isAvailable": true,
+        "variants": []
+      },
+      {
+        "id": "mi32",
+        "name": "Coconut Whole Fish",
+        "description": null,
+        "photoUrl": null,
+        "price": 1000,
+        "isVegetarian": false,
+        "isAvailable": true,
+        "variants": []
+      }
+    ]
+  },
+  {
+    "id": "mc-platters",
+    "name": "Platters",
+    "description": "Generous mixed grills made for sharing.",
+    "imageUrl": null,
+    "menuItems": [
+      {
+        "id": "mi33",
+        "name": "Mixed Grilled Platter (Ideal for 1)",
+        "description": null,
+        "photoUrl": null,
+        "price": 1200,
+        "isVegetarian": false,
+        "isAvailable": true,
+        "variants": []
+      },
+      {
+        "id": "mi34",
+        "name": "Mixed Grilled Platter (Ideal for 2)",
+        "description": null,
+        "photoUrl": null,
+        "price": 2500,
+        "isVegetarian": false,
+        "isAvailable": true,
+        "variants": []
+      },
+      {
+        "id": "mi35",
+        "name": "Mixed Grilled Platter (Ideal for Family)",
+        "description": null,
+        "photoUrl": null,
+        "price": 4000,
+        "isVegetarian": false,
+        "isAvailable": true,
+        "variants": []
+      }
+    ]
+  },
+  {
+    "id": "mc-desserts",
+    "name": "Desserts",
+    "description": null,
+    "imageUrl": null,
+    "menuItems": [
+      {
+        "id": "mi36",
+        "name": "Vanilla Ice Cream (Dessert)",
+        "description": null,
+        "photoUrl": null,
+        "price": 200,
+        "isVegetarian": false,
+        "isAvailable": true,
+        "variants": []
+      },
+      {
+        "id": "mi37",
+        "name": "Tropical Fruit Salad Topped with Ice Cream",
+        "description": null,
+        "photoUrl": null,
+        "price": 300,
+        "isVegetarian": true,
+        "isAvailable": true,
+        "variants": []
+      }
+    ]
+  }
+]
