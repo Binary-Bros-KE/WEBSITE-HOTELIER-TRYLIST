@@ -4,6 +4,7 @@ import { contactLinks } from "@/engine/stay";
 import type { ThemePages } from "@/engine/theme";
 import type { MenuItem } from "@/engine/types";
 import { ContactButtons } from "../ContactButtons";
+import { InquiryForm } from "../ServiceForms";
 import { SocialIcon } from "../icons";
 import { Container, cx, Section } from "../ui";
 
@@ -135,7 +136,11 @@ export const ServicesPage: ThemePages["services"] = ({ site, categories }) => {
                         </li>
                       )}
                     </ul>
-                    {links[0] && (
+                    {service.bookableOnline ? (
+                      <a href={`/book/service/${service.id}`} className="mt-auto w-fit bg-brand px-6 py-3.5 text-[0.68rem] font-medium uppercase tracking-[0.22em] text-paper transition-colors hover:bg-brand-deep">
+                        Book online
+                      </a>
+                    ) : links[0] && (
                       <a href={links[0].href} target={links[0].kind === "whatsapp" ? "_blank" : undefined} rel="noopener noreferrer" className="mt-auto text-[0.68rem] font-medium uppercase tracking-[0.22em] text-ink underline decoration-accent underline-offset-8 hover:text-brand">
                         {links[0].kind === "whatsapp" ? "Book on WhatsApp" : links[0].label}
                       </a>
@@ -183,7 +188,7 @@ export const MembershipsPage: ThemePages["memberships"] = ({ site, plans }) => {
   );
 };
 
-export const ContactPage: ThemePages["contact"] = ({ site }) => {
+export const ContactPage: ThemePages["contact"] = ({ site, inquiryAction }) => {
   const c = site.contact;
   const map = safeMapEmbed(c.mapEmbedUrl);
   const address = [c.address, c.city, c.county, c.country].filter(Boolean);
@@ -223,6 +228,12 @@ export const ContactPage: ThemePages["contact"] = ({ site }) => {
             </dl>
           )}
           <ContactButtons links={contactLinks(site, `Enquiry — ${site.name}`, `Hello ${site.name}, `)} />
+          {inquiryAction && (
+            <div className="flex flex-col gap-8 border-t border-line pt-12">
+              <h2 className="font-display text-3xl font-light text-ink">Send us a message</h2>
+              <InquiryForm action={inquiryAction} sourcePage="/contact" />
+            </div>
+          )}
           {socials.length > 0 && (
             <ul className="flex gap-3">
               {socials.map(([name, url]) => (

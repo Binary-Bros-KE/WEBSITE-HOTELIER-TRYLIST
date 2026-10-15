@@ -67,23 +67,23 @@ function Footer({ site, nav }: { site: Site; nav: { href: string; label: string 
         </div>
 
         <div className="mt-16 grid gap-12 text-sm sm:grid-cols-2 lg:grid-cols-4">
-          <div>
+          {(c.address || c.city || c.country) && <div>
             <h2 className="aurora-eyebrow mb-5">Visit</h2>
             <address className="not-italic leading-relaxed">
               {c.address && <p>{c.address}</p>}
               <p>{[c.city, c.county].filter(Boolean).join(", ")}</p>
               {c.country && <p>{c.country}</p>}
             </address>
-          </div>
+          </div>}
 
-          <div>
+          {(c.phone || c.alternativePhone || c.email) && <div>
             <h2 className="aurora-eyebrow mb-5">Contact</h2>
             <ul className="space-y-2">
               {c.phone && <li><a href={telHref(c.phone)} className="transition-colors hover:text-paper">{c.phone}</a></li>}
               {c.alternativePhone && <li><a href={telHref(c.alternativePhone)} className="transition-colors hover:text-paper">{c.alternativePhone}</a></li>}
               {c.email && <li><a href={`mailto:${c.email}`} className="transition-colors hover:text-paper">{c.email}</a></li>}
             </ul>
-          </div>
+          </div>}
 
           <div>
             <h2 className="aurora-eyebrow mb-5">Explore</h2>

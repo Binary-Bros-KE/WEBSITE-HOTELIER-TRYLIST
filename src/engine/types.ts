@@ -45,6 +45,8 @@ export type Site = {
   };
   social: Record<string, string>;
   features: SiteFeatures;
+  /** Online booking rules (absent on responses from older APIs). */
+  booking?: BookingRules;
   nav: NavItem[];
   /** True while a platform admin previews drafts (absent on live responses from older APIs). */
   preview?: boolean;
@@ -125,3 +127,48 @@ export type MembershipPlan = {
   discountPercent: number;
   visitLimit: number | null;
 };
+
+export type BookingRules = {
+  confirmation: "AUTO" | "MANUAL";
+  requirePayment: boolean;
+  depositPercent: number;
+  depositMinimum: number;
+  holdMinutes: number;
+  paymentAvailable: boolean;
+};
+
+export type RoomBookingView = {
+  reference: string;
+  status: "PENDING" | "CONFIRMED" | "CHECKED_IN" | "CHECKED_OUT" | "CANCELLED" | "NO_SHOW";
+  checkIn: string;
+  checkOut: string;
+  nights: number;
+  adults: number;
+  children: number;
+  roomType: { id: string; name: string; imageUrl: string | null };
+  rateName: string | null;
+  guest: { firstName: string; lastName: string | null; email: string | null };
+  estimatedTotal: number;
+  paid: number;
+  paymentDue: number;
+  holdExpiresAt: string | null;
+  pendingPaymentId: string | null;
+  canCancel: boolean;
+  cancellationReason: string | null;
+};
+
+export type AppointmentView = {
+  reference: string | null;
+  status: "BOOKED" | "CONFIRMED" | "IN_PROGRESS" | "COMPLETED" | "CANCELLED" | "NO_SHOW";
+  date: string;
+  time: string;
+  durationMinutes: number;
+  service: { name: string; variant: string | null; imageUrl: string | null };
+  guest: { firstName: string; lastName: string | null; email: string | null };
+  amount: number;
+  canCancel: boolean;
+};
+
+export type GuestBooking = { kind: "room"; booking: RoomBookingView } | { kind: "appointment"; booking: AppointmentView };
+
+export type PaymentState = { status: "PENDING" | "SUCCESS" | "FAILED" | "CANCELLED" | "TIMEOUT"; message: string | null };

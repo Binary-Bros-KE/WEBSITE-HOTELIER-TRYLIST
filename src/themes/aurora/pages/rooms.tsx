@@ -202,7 +202,20 @@ export const RoomPage: ThemePages["room"] = ({ site, room, others, stay, availab
               <div className="flex flex-col gap-4 border-t border-line px-6 py-6">
                 {stay.error && <p role="alert" className="text-sm text-ink">{stay.error}</p>}
                 {stay.search && availability && <AvailabilityTag availability={availability} />}
-                {bookable ? (
+                {bookable && site.features.roomBooking && stay.search ? (
+                  <>
+                    <a
+                      href={`/book/room?${new URLSearchParams({ roomTypeId: room.id, checkIn: stay.search.checkIn, checkOut: stay.search.checkOut, guests: String(stay.search.guests), ...(cheapest ? { rateId: cheapest.id } : {}) })}`}
+                      className="inline-flex items-center justify-center bg-brand px-6 py-4 text-[0.7rem] font-medium uppercase tracking-[0.24em] text-paper transition-colors hover:bg-brand-deep"
+                    >
+                      Book now
+                    </a>
+                    <p className="pt-2 text-xs uppercase tracking-[0.16em] text-ink-soft">Or reach us directly</p>
+                    <ContactButtons links={links.map((l) => (l.kind === "whatsapp" ? { ...l, label: "WhatsApp us" } : l))} stacked quiet />
+                  </>
+                ) : bookable && site.features.roomBooking ? (
+                  <p className="text-sm leading-relaxed text-ink-soft">Choose your dates above to book online.</p>
+                ) : bookable ? (
                   <ContactButtons links={links} stacked />
                 ) : (
                   <p className="text-sm leading-relaxed text-ink-soft">This room is taken for those dates. Try other dates, or <Link href={`/rooms${searchQuery(stay.search)}`} className="text-ink underline underline-offset-4">see what's free</Link>.</p>

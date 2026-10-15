@@ -1,7 +1,11 @@
 import type { ComponentType, CSSProperties, ReactNode } from "react";
 
 import type { SectionProps, SectionType } from "./sections";
-import type { MembershipPlan, MenuCategory, RoomAvailability, RoomType, ServiceCategory, Site, StaySearch } from "./types";
+import type { FormState } from "./actions";
+import type { GuestBooking, MembershipPlan, MenuCategory, RoomAvailability, RoomType, Service, ServiceCategory, Site, StaySearch } from "./types";
+
+/** A server action as a form receives it (bound actions already carry their extra arguments). */
+export type FormAction = (prev: FormState, form: FormData) => Promise<FormState>;
 
 /** A room search as the built-in pages receive it: validated (or rejected) by the engine. */
 export type StayState = { search: StaySearch | null; error: string | null };
@@ -14,7 +18,22 @@ export type ThemePages = {
   dining: ComponentType<{ site: Site; menu: MenuCategory[] }>;
   services: ComponentType<{ site: Site; categories: ServiceCategory[] }>;
   memberships: ComponentType<{ site: Site; plans: MembershipPlan[] }>;
-  contact: ComponentType<{ site: Site }>;
+  /** inquiryAction is present when the site takes enquiries. */
+  contact: ComponentType<{ site: Site; inquiryAction?: FormAction }>;
+  bookRoom: ComponentType<{ site: Site; room: RoomType; rateId: string | null; search: StaySearch; availability: RoomAvailability | null; action: FormAction }>;
+  bookService: ComponentType<{ site: Site; service: Service; action: FormAction }>;
+  /** The guest's own page for a booking, opened from the link in their confirmation. */
+  booking: ComponentType<{
+    site: Site;
+    booking: GuestBooking;
+    token: string;
+    justCreated: boolean;
+    /** An M-Pesa prompt in flight, to watch until it settles. */
+    payingId: string | null;
+    payError: string | null;
+    payAction: FormAction;
+    cancelAction: (prev: FormState) => Promise<FormState>;
+  }>;
 };
 
 // The contract every theme fulfils. Themes are presentation only: the engine
