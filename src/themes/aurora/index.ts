@@ -5,6 +5,8 @@ import type { Theme } from "@/engine/theme";
 import { cormorant, jost } from "./fonts";
 import { AuroraLayout } from "./Layout";
 import { NotFound, PageTitle } from "./PageChrome";
+import { RoomPage, RoomsPage } from "./pages/rooms";
+import { ContactPage, DiningPage, MembershipsPage, ServicesPage } from "./pages/venue";
 import { Amenities, CallToAction, Faq, Gallery, ImageText, RichText, Testimonials } from "./sections/content";
 import { ContactMap, MembershipPlans, MenuHighlights, RoomsShowcase, ServicesShowcase } from "./sections/data";
 import { Hero } from "./sections/Hero";
@@ -19,6 +21,7 @@ export const aurora: Theme = {
   Layout: AuroraLayout,
   PageTitle,
   NotFound,
+  pages: { rooms: RoomsPage, room: RoomPage, dining: DiningPage, services: ServicesPage, memberships: MembershipsPage, contact: ContactPage },
   fontClassName: `${cormorant.variable} ${jost.variable} theme-aurora`,
   brandStyle: (site) => {
     const style: Record<string, string> = {};

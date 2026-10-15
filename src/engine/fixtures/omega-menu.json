@@ -79,7 +79,7 @@
         "description": null,
         "photoUrl": null,
         "price": 300,
-        "isVegetarian": false,
+        "isVegetarian": true,
         "isAvailable": true,
         "variants": []
       },
@@ -89,7 +89,7 @@
         "description": null,
         "photoUrl": null,
         "price": 400,
-        "isVegetarian": true,
+        "isVegetarian": false,
         "isAvailable": true,
         "variants": []
       },
@@ -109,7 +109,7 @@
         "description": null,
         "photoUrl": null,
         "price": 500,
-        "isVegetarian": true,
+        "isVegetarian": false,
         "isAvailable": true,
         "variants": []
       },
@@ -119,7 +119,7 @@
         "description": null,
         "photoUrl": null,
         "price": 500,
-        "isVegetarian": true,
+        "isVegetarian": false,
         "isAvailable": true,
         "variants": []
       }
@@ -417,7 +417,7 @@
         "description": null,
         "photoUrl": null,
         "price": 200,
-        "isVegetarian": false,
+        "isVegetarian": true,
         "isAvailable": true,
         "variants": []
       },

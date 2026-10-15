@@ -1,10 +1,9 @@
-import Link from "next/link";
-
 import { getMemberships, getMenu, getRoomTypes, getServices } from "@/engine/api";
-import { formatDuration, formatMoney, telHref, unitLabel } from "@/engine/format";
+import { formatDuration, formatMoney, telHref } from "@/engine/format";
 import { safeImage, safeMapEmbed } from "@/engine/safe";
 import type { SectionComponentProps } from "@/engine/theme";
 import type { MenuItem } from "@/engine/types";
+import { RoomCard } from "../RoomCard";
 import { ArrowLink, ButtonLink, Container, cx, Section, SectionHeading } from "../ui";
 
 // Sections fed by the tenant's live data. Each one renders nothing when its
@@ -25,37 +24,7 @@ export async function RoomsShowcase({ props, site }: SectionComponentProps<"room
       <Container className="flex flex-col gap-16">
         <SectionHeading eyebrow={props.eyebrow} title={props.title} intro={props.intro} />
         <ul className={cx("grid gap-x-8 gap-y-14 sm:grid-cols-2", rooms.length >= 3 && "lg:grid-cols-3")}>
-          {rooms.map((room) => {
-            const cover = safeImage(room.imageUrls[0]);
-            const unit = unitLabel(room.priceUnit);
-            return (
-              <li key={room.id}>
-                <Link href={`/rooms/${room.id}`} className="group flex flex-col gap-6">
-                  <div className="relative aspect-[4/5] overflow-hidden bg-stone">
-                    {cover && (
-                      // eslint-disable-next-line @next/next/no-img-element
-                      <img src={cover} alt={room.name} loading="lazy" className="size-full object-cover transition-transform duration-[1400ms] ease-out group-hover:scale-105" />
-                    )}
-                    <span className="absolute left-5 top-5 bg-paper/90 px-3 py-1.5 text-[0.65rem] uppercase tracking-[0.2em] text-ink">
-                      Sleeps {room.capacity}
-                    </span>
-                  </div>
-                  <div className="flex flex-col gap-3">
-                    <h3 className="font-display text-3xl font-light text-ink">{room.name}</h3>
-                    {room.description && <p className="line-clamp-2 text-[0.95rem] leading-relaxed text-ink-soft">{room.description}</p>}
-                    <div className="mt-2 flex items-end justify-between gap-4 border-t border-line pt-4">
-                      <p className="text-sm text-ink-soft">
-                        From <span className="font-display text-2xl text-ink">{formatMoney(room.priceFrom, site.currency)}</span>
-                        {unit && <span> / {unit}</span>}
-                        {!room.pricesIncludeTax && <span className="block text-[0.7rem] uppercase tracking-[0.16em]">Excl. VAT</span>}
-                      </p>
-                      <span className="text-[0.68rem] font-medium uppercase tracking-[0.24em] text-ink transition-colors group-hover:text-accent">Discover</span>
-                    </div>
-                  </div>
-                </Link>
-              </li>
-            );
-          })}
+          {rooms.map((room) => <li key={room.id}><RoomCard room={room} currency={site.currency} /></li>)}
         </ul>
         {props.cta && <div className="flex justify-center"><ButtonLink href={props.cta.href} variant="outline">{props.cta.label}</ButtonLink></div>}
       </Container>

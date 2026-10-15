@@ -5,7 +5,7 @@ import { cookies, headers } from "next/headers";
 
 import { fixtureFor } from "./fixtures";
 import { PREVIEW_COOKIE } from "./preview";
-import type { MembershipPlan, MenuCategory, Page, RoomType, ServiceCategory, Site } from "./types";
+import type { MembershipPlan, MenuCategory, Page, RoomAvailability, RoomType, ServiceCategory, Site, StaySearch } from "./types";
 
 // The only door to tenant data. Every call names the visitor's hostname
 // (x-site-host) — that's how the API knows whose site this is. Responses are
@@ -70,6 +70,34 @@ export const getRoomTypes = cache(async (): Promise<RoomType[]> => {
   if (demo) return demo.roomTypes;
   return (await apiGet<{ roomTypes: RoomType[] }>("/rooms"))?.roomTypes ?? [];
 });
+
+export const getRoomType = cache(async (id: string): Promise<RoomType | null> => {
+  const demo = fixture();
+  if (demo) return demo.roomTypes.find((t) => t.id === id) ?? null;
+  return (await apiGet<{ roomType: RoomType }>(`/rooms/${encodeURIComponent(id)}`))?.roomType ?? null;
+});
+
+/** Live availability for a stay — never cached. A rejected search (dates in
+ * the past, too long…) comes back as { error } for the page to show. */
+export async function getAvailability(search: StaySearch): Promise<{ availability: RoomAvailability[] } | { error: string }> {
+  const demo = fixture();
+  if (demo) {
+    return { availability: demo.roomTypes.map((t) => ({ roomTypeId: t.id, available: t.capacity >= search.guests, fitsGuests: t.capacity >= search.guests, roomsLeft: null })) };
+  }
+  const [host, preview] = await Promise.all([siteHost(), previewToken()]);
+  const query = new URLSearchParams({ checkIn: search.checkIn, checkOut: search.checkOut, guests: String(search.guests) });
+  const res = await fetch(`${API_URL}/public/site/rooms/availability?${query}`, {
+    headers: { "x-site-host": host, accept: "application/json", ...(preview ? { "x-site-preview": preview } : {}) },
+    cache: "no-store",
+  });
+  if (res.status === 400) {
+    const body = (await res.json().catch(() => ({}))) as { details?: { fieldErrors?: Record<string, string[]> } };
+    const first = Object.values(body.details?.fieldErrors ?? {}).flat()[0];
+    return { error: first ?? "Please check your dates" };
+  }
+  if (!res.ok) throw new ApiError(res.status, "/rooms/availability");
+  return (await res.json()) as { availability: RoomAvailability[] };
+}
 
 export const getMenu = cache(async (): Promise<MenuCategory[]> => {
   const demo = fixture();

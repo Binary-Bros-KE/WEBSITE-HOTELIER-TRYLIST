@@ -78,6 +78,17 @@ export type RoomType = {
   rates: RoomRate[];
 };
 
+export type RoomAvailability = {
+  roomTypeId: string;
+  available: boolean;
+  fitsGuests: boolean;
+  /** Exact count only when scarce (≤ 3), otherwise null. */
+  roomsLeft: number | null;
+};
+
+/** A validated stay search: dates as YYYY-MM-DD. */
+export type StaySearch = { checkIn: string; checkOut: string; guests: number; nights: number };
+
 export type MenuVariant = { id: string; name: string; price: number };
 export type MenuItem = {
   id: string;

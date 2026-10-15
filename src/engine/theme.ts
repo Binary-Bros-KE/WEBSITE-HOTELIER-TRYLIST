@@ -1,7 +1,21 @@
 import type { ComponentType, CSSProperties, ReactNode } from "react";
 
 import type { SectionProps, SectionType } from "./sections";
-import type { Site } from "./types";
+import type { MembershipPlan, MenuCategory, RoomAvailability, RoomType, ServiceCategory, Site, StaySearch } from "./types";
+
+/** A room search as the built-in pages receive it: validated (or rejected) by the engine. */
+export type StayState = { search: StaySearch | null; error: string | null };
+
+/** Built-in, data-driven pages. The engine fetches and checks everything; the
+ * theme only lays it out. */
+export type ThemePages = {
+  rooms: ComponentType<{ site: Site; roomTypes: RoomType[]; stay: StayState; availability: RoomAvailability[] | null }>;
+  room: ComponentType<{ site: Site; room: RoomType; others: RoomType[]; stay: StayState; availability: RoomAvailability | null }>;
+  dining: ComponentType<{ site: Site; menu: MenuCategory[] }>;
+  services: ComponentType<{ site: Site; categories: ServiceCategory[] }>;
+  memberships: ComponentType<{ site: Site; plans: MembershipPlan[] }>;
+  contact: ComponentType<{ site: Site }>;
+};
 
 // The contract every theme fulfils. Themes are presentation only: the engine
 // fetches data, validates content and decides what's enabled; a theme gets
@@ -24,6 +38,8 @@ export type Theme = {
   PageTitle: ComponentType<{ title: string; eyebrow?: string }>;
   /** Shown inside the Layout for an unknown path. */
   NotFound: ComponentType;
+  /** Built-in pages: rooms, room detail, dining, services, memberships, contact. */
+  pages: ThemePages;
   /** A renderer per supported block type; unsupported types are skipped. */
   sections: { [T in SectionType]?: ComponentType<SectionComponentProps<T>> };
   /** CSS custom properties carrying the tenant's branding into the theme. */
