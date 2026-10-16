@@ -4,15 +4,16 @@ const API_URL = (process.env.API_URL ?? "http://localhost:4000").replace(/\/+$/,
 
 // Content-Security-Policy for every tenant site: only what the sites actually
 // use — our own origin, Google Maps embeds, Cloudflare Turnstile, and Google
-// Analytics (loaded only after consent). 'unsafe-inline' scripts are needed by
+// Analytics (loaded only after consent), plus Cloudflare Web Analytics, which
+// Cloudflare injects itself on client zones that have it on. 'unsafe-inline' scripts are needed by
 // Next's inline bootstrap without nonces; no third-party script can load.
 const csp = [
   "default-src 'self'",
-  "script-src 'self' 'unsafe-inline' https://challenges.cloudflare.com https://www.googletagmanager.com",
+  "script-src 'self' 'unsafe-inline' https://challenges.cloudflare.com https://www.googletagmanager.com https://static.cloudflareinsights.com",
   "style-src 'self' 'unsafe-inline'",
   "img-src 'self' data: blob: https:",
   "font-src 'self' data:",
-  "connect-src 'self' https://challenges.cloudflare.com https://*.google-analytics.com https://*.analytics.google.com https://*.googletagmanager.com",
+  "connect-src 'self' https://challenges.cloudflare.com https://*.google-analytics.com https://*.analytics.google.com https://*.googletagmanager.com https://cloudflareinsights.com",
   "frame-src https://www.google.com https://challenges.cloudflare.com",
   "frame-ancestors 'self'",
   "form-action 'self'",
