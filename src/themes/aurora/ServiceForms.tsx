@@ -6,6 +6,7 @@ import type { FormState } from "@/engine/actions";
 import { formatDuration, formatMoney } from "@/engine/format";
 import type { FormAction } from "@/engine/theme";
 import type { Service } from "@/engine/types";
+import { Turnstile } from "@/engine/Turnstile";
 import { FormError, Honeypot, SelectField, SubmitButton, TextAreaField, TextField } from "./forms";
 import { cx } from "./ui";
 
@@ -13,7 +14,7 @@ function todayInNairobi(): string {
   return new Intl.DateTimeFormat("en-CA", { timeZone: "Africa/Nairobi" }).format(new Date());
 }
 
-export function BookServiceForm({ service, currency, action }: { service: Service; currency: string; action: FormAction }) {
+export function BookServiceForm({ service, currency, action, turnstileSiteKey }: { service: Service; currency: string; action: FormAction; turnstileSiteKey?: string | null }) {
   const [state, formAction] = useActionState<FormState, FormData>(action, {});
   const [variantId, setVariantId] = useState(service.variants[0]?.id ?? "");
   const [date, setDate] = useState("");
@@ -87,6 +88,7 @@ export function BookServiceForm({ service, currency, action }: { service: Servic
             <div className="flex items-baseline justify-between py-3"><dt className="text-ink-soft">Price</dt><dd className="font-display text-2xl text-ink">{formatMoney(price, currency)}</dd></div>
           </dl>
           <FormError state={state} />
+          <Turnstile siteKey={turnstileSiteKey} resetOn={state} />
           <SubmitButton pendingLabel="Sending request…" disabled={!time}>Request appointment</SubmitButton>
           <p className="text-xs leading-relaxed text-ink-soft">Pay at your visit. Our team confirms your time shortly.
             <span className="mt-2 block">By sending this you agree to our <a href="/privacy" className="underline underline-offset-2 hover:text-ink">privacy notice</a>.</span></p>
@@ -98,7 +100,7 @@ export function BookServiceForm({ service, currency, action }: { service: Servic
 
 const KINDS = [["GENERAL", "General question"], ["ROOM", "Rooms & stays"], ["EVENT", "Weddings & events"], ["SERVICE", "Spa & wellness"], ["MEMBERSHIP", "Memberships"]] as const;
 
-export function InquiryForm({ action, sourcePage }: { action: FormAction; sourcePage: string }) {
+export function InquiryForm({ action, sourcePage, turnstileSiteKey }: { action: FormAction; sourcePage: string; turnstileSiteKey?: string | null }) {
   const [state, formAction] = useActionState<FormState, FormData>(action, {});
   if (state.done) {
     return (
@@ -121,6 +123,7 @@ export function InquiryForm({ action, sourcePage }: { action: FormAction; source
       <TextAreaField label="Message" name="message" state={state} required rows={5} className="sm:col-span-2" />
       <div className="flex flex-col gap-4 sm:col-span-2">
         <FormError state={state} />
+        <Turnstile siteKey={turnstileSiteKey} resetOn={state} />
         <SubmitButton pendingLabel="Sending…" className="w-fit">Send message</SubmitButton>
         <p className="text-xs text-ink-soft">By sending this you agree to our <a href="/privacy" className="underline underline-offset-2 hover:text-ink">privacy notice</a>.</p>
       </div>

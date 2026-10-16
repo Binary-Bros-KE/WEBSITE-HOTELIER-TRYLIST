@@ -7,6 +7,7 @@ import { formatMoney } from "@/engine/format";
 import { formatDay, mealPlanLabel } from "@/engine/stay";
 import type { FormAction } from "@/engine/theme";
 import type { BookingRules, RoomType, StaySearch } from "@/engine/types";
+import { Turnstile } from "@/engine/Turnstile";
 import { FormError, Honeypot, SelectField, SubmitButton, TextAreaField, TextField } from "./forms";
 import { cx } from "./ui";
 
@@ -17,6 +18,7 @@ type Props = {
   currency: string;
   rules: BookingRules | null;
   action: FormAction;
+  turnstileSiteKey?: string | null;
 };
 
 /** Mirrors the API's rule: the larger of the percentage and the minimum, capped at the stay. */
@@ -24,7 +26,7 @@ function deposit(rules: BookingRules, total: number): number {
   return Math.min(total, Math.max((total * rules.depositPercent) / 100, rules.depositMinimum));
 }
 
-export function BookRoomForm({ room, rateId, search, currency, rules, action }: Props) {
+export function BookRoomForm({ room, rateId, search, currency, rules, action, turnstileSiteKey }: Props) {
   const [state, formAction] = useActionState<FormState, FormData>(action, {});
   const rates = room.rates.length > 0 ? room.rates : [{ id: "", name: "Room", mealPlan: null, price: room.priceFrom, unit: room.priceUnit }];
   const [selected, setSelected] = useState(rates.find((r) => r.id === rateId)?.id ?? rates[0].id);
@@ -133,6 +135,7 @@ export function BookRoomForm({ room, rateId, search, currency, rules, action }: 
             )}
           </dl>
           <FormError state={state} />
+          <Turnstile siteKey={turnstileSiteKey} resetOn={state} />
           <SubmitButton pendingLabel={takesPayment ? "Sending M-Pesa prompt…" : "Sending request…"} disabled={paymentBlocked}>
             {takesPayment ? "Book & pay" : "Request booking"}
           </SubmitButton>

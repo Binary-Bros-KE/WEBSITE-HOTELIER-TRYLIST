@@ -47,6 +47,8 @@ export type Site = {
   features: SiteFeatures;
   /** Online booking rules (absent on responses from older APIs). */
   booking?: BookingRules;
+  /** Anti-spam settings (absent on older APIs). */
+  security?: { turnstileSiteKey: string | null };
   nav: NavItem[];
   /** True while a platform admin previews drafts (absent on live responses from older APIs). */
   preview?: boolean;

@@ -21,6 +21,7 @@ const guest = (form: FormData) => ({
   email: optional(form, "email"),
   notes: optional(form, "notes"),
   company: text(form, "company"), // honeypot
+  turnstileToken: optional(form, "turnstileToken"),
 });
 
 const tokenPath = (token: string) => `/booking/${encodeURIComponent(token)}`;
@@ -66,6 +67,7 @@ export async function inquiryAction(_prev: FormState, form: FormData): Promise<F
     message: text(form, "message"),
     sourcePage: optional(form, "sourcePage"),
     company: text(form, "company"),
+    turnstileToken: optional(form, "turnstileToken"),
   });
   if (!result.ok) return { error: result.error, fieldErrors: result.fieldErrors };
   return { done: true };

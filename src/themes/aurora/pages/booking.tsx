@@ -28,7 +28,7 @@ export const BookRoomPage: ThemePages["bookRoom"] = ({ site, room, rateId, searc
   return (
     <Section className="!pt-14">
       <Container>
-        <BookRoomForm room={room} rateId={rateId} search={search} currency={site.currency} rules={site.booking ?? null} action={action} />
+        <BookRoomForm room={room} rateId={rateId} search={search} currency={site.currency} rules={site.booking ?? null} action={action} turnstileSiteKey={site.security?.turnstileSiteKey} />
       </Container>
     </Section>
   );
@@ -37,7 +37,7 @@ export const BookRoomPage: ThemePages["bookRoom"] = ({ site, room, rateId, searc
 export const BookServicePage: ThemePages["bookService"] = ({ site, service, action }) => (
   <Section className="!pt-14">
     <Container>
-      <BookServiceForm service={service} currency={site.currency} action={action} />
+      <BookServiceForm service={service} currency={site.currency} action={action} turnstileSiteKey={site.security?.turnstileSiteKey} />
     </Container>
   </Section>
 );

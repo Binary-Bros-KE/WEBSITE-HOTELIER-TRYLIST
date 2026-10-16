@@ -231,7 +231,7 @@ export const ContactPage: ThemePages["contact"] = ({ site, inquiryAction }) => {
           {inquiryAction && (
             <div className="flex flex-col gap-8 border-t border-line pt-12">
               <h2 className="font-display text-3xl font-light text-ink">Send us a message</h2>
-              <InquiryForm action={inquiryAction} sourcePage="/contact" />
+              <InquiryForm action={inquiryAction} sourcePage="/contact" turnstileSiteKey={site.security?.turnstileSiteKey} />
             </div>
           )}
           {socials.length > 0 && (
