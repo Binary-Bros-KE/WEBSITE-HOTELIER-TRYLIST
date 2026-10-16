@@ -4,7 +4,8 @@
 #   sudo bash ~/WEBSITE-HOTELIER/scripts/setup-site-hosting.sh
 #
 # It asks for a Cloudflare API token (or reads CF_API_TOKEN) with, on the
-# hoteliermanagement.app zone:  Zone > DNS > Edit  and  Zone > SSL and Certificates > Edit.
+# hoteliermanagement.app zone:  DNS Write  and  SSL and Certificates Write
+# (older dashboard wording: Zone > DNS > Edit, Zone > SSL and Certificates > Edit).
 #
 # What it does (each step is idempotent — safe to run again):
 #   1. Verifies the token and finds the zone.
@@ -44,9 +45,10 @@ fi
 cf() { curl -fsS -H "Authorization: Bearer ${CF_API_TOKEN}" -H "Content-Type: application/json" "$@"; }
 
 echo "==> 1. Checking the token"
-[ "$(cf "$CF/user/tokens/verify" | jq -r .success)" = "true" ] || { echo "Token rejected by Cloudflare."; exit 1; }
-ZONE_ID="$(cf "$CF/zones?name=${ZONE_NAME}" | jq -r '.result[0].id // empty')"
-[ -n "$ZONE_ID" ] || { echo "The token can't see the ${ZONE_NAME} zone."; exit 1; }
+# Checked by looking the zone up — works for both user and account-owned tokens
+# (/user/tokens/verify rejects account tokens).
+ZONE_ID="$(cf "$CF/zones?name=${ZONE_NAME}" 2>/dev/null | jq -r '.result[0].id // empty' || true)"
+[ -n "$ZONE_ID" ] || { echo "Token rejected, or it can't see the ${ZONE_NAME} zone — check its zone resources."; exit 1; }
 SERVER_IP="$(curl -fsS -4 https://ifconfig.me)"
 echo "    zone ${ZONE_ID}, server ${SERVER_IP}"
 echo "    zone SSL mode: $(cf "$CF/zones/${ZONE_ID}/settings/ssl" | jq -r '.result.value // "unknown"')"
