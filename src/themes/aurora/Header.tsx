@@ -1,6 +1,7 @@
 "use client";
 
 import Link from "next/link";
+import { responsiveImage } from "@/engine/img";
 import { usePathname } from "next/navigation";
 import { useEffect, useState } from "react";
 
@@ -63,7 +64,7 @@ export function Header({ name, logoUrl, nav, cta, topBar }: HeaderProps) {
         <Link href="/" className="flex shrink-0 items-center gap-3" aria-label={`${name} — home`}>
           {logoUrl ? (
             // eslint-disable-next-line @next/next/no-img-element
-            <img src={logoUrl} alt={name} className="aurora-logo h-12 w-auto object-contain" />
+            <img {...responsiveImage(logoUrl, "128px", { small: true, max: 256 })} alt={name} className="aurora-logo h-12 w-auto object-contain" />
           ) : (
             <span className="font-display text-2xl font-normal tracking-wide">{name}</span>
           )}

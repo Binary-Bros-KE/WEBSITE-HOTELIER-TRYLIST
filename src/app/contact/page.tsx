@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import { systemPageMetadata } from "@/engine/meta";
 import { notFound } from "next/navigation";
 
 import { inquiryAction } from "@/engine/actions";
@@ -6,7 +7,9 @@ import { getSite } from "@/engine/api";
 import { themeFor } from "@/themes";
 import { SystemPageFrame } from "@/themes/render";
 
-export const metadata: Metadata = { title: "Contact", alternates: { canonical: "/contact" } };
+export function generateMetadata(): Promise<Metadata> {
+  return systemPageMetadata("contact", "Contact", (site, w) => `How to reach ${site.name}${w} — address, map, phone, WhatsApp and email, or send us a message.`);
+}
 
 export default async function ContactRoute() {
   const site = await getSite();

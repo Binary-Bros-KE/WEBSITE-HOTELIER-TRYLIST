@@ -98,6 +98,17 @@ export const sectionSchemas = {
     images: z.array(image.extend({ caption: z.string().trim().max(120).optional() })).max(24).default([]),
   }),
 
+  /** Cards that route each kind of guest — Stay, Celebrate, Meet, Dine. */
+  pathways: z.object({
+    ...heading,
+    items: z.array(z.object({
+      title: z.string().trim().min(1).max(60),
+      text: z.string().trim().max(200).default(""),
+      image: image.optional(),
+      link: link,
+    })).max(6).default([]),
+  }),
+
   testimonials: z.object({
     ...heading,
     items: z.array(z.object({

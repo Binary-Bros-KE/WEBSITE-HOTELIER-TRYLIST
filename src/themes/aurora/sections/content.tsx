@@ -1,6 +1,8 @@
+import Link from "next/link";
 import type { SectionComponentProps } from "@/engine/theme";
+import { responsiveImage } from "@/engine/img";
 import { paragraphs } from "@/engine/format";
-import { safeImage } from "@/engine/safe";
+import { safeHref, safeImage } from "@/engine/safe";
 import { AmenityIcon } from "../icons";
 import { ArrowLink, ButtonLink, Container, cx, Section, SectionHeading } from "../ui";
 
@@ -31,7 +33,7 @@ export function ImageText({ props }: SectionComponentProps<"image-text">) {
           <div className={cx("relative", imageRight && "lg:order-2")}>
             <div aria-hidden className={cx("absolute -bottom-5 hidden h-full w-full border border-accent/50 lg:block", imageRight ? "-left-5" : "-right-5")} />
             {/* eslint-disable-next-line @next/next/no-img-element */}
-            <img src={src} alt={props.image?.alt ?? ""} loading="lazy" className="relative aspect-[4/3] w-full object-cover lg:aspect-square" />
+            <img {...responsiveImage(src, "(min-width: 1024px) 50vw, 100vw")} alt={props.image?.alt ?? ""} loading="lazy" className="relative aspect-[4/3] w-full object-cover lg:aspect-square" />
           </div>
         )}
         <div className="flex flex-col items-start gap-8">
@@ -97,7 +99,7 @@ export function Gallery({ props }: SectionComponentProps<"gallery">) {
               )}
             >
               {/* eslint-disable-next-line @next/next/no-img-element */}
-              <img src={img.url!} alt={img.alt} loading="lazy" className="size-full object-cover transition-transform duration-[1200ms] ease-out group-hover:scale-105" />
+              <img {...responsiveImage(img.url!, i % 6 === 0 ? "(min-width: 1024px) 50vw, 100vw" : "(min-width: 1024px) 25vw, 50vw")} alt={img.alt} loading="lazy" className="size-full object-cover transition-transform duration-[1200ms] ease-out group-hover:scale-105" />
               {img.caption && (
                 <span className="absolute inset-x-0 bottom-0 bg-gradient-to-t from-black/60 to-transparent p-5 font-display text-xl italic text-white opacity-0 transition-opacity duration-500 group-hover:opacity-100">
                   {img.caption}
@@ -169,7 +171,7 @@ export function CallToAction({ props }: SectionComponentProps<"cta">) {
       {src && (
         <>
           {/* eslint-disable-next-line @next/next/no-img-element */}
-          <img src={src} alt="" loading="lazy" className="absolute inset-0 -z-20 size-full object-cover" />
+          <img {...responsiveImage(src, "100vw")} alt="" loading="lazy" className="absolute inset-0 -z-20 size-full object-cover" />
           <div aria-hidden className="absolute inset-0 -z-10 bg-brand-deep/80" />
         </>
       )}
@@ -183,5 +185,41 @@ export function CallToAction({ props }: SectionComponentProps<"cta">) {
         )}
       </Container>
     </section>
+  );
+}
+
+/** One card per kind of guest — each a single clear next step. */
+export function Pathways({ props }: SectionComponentProps<"pathways">) {
+  const items = props.items.filter((item) => safeHref(item.link.href));
+  if (items.length === 0) return null;
+  return (
+    <Section>
+      <Container className="flex flex-col gap-14">
+        <SectionHeading eyebrow={props.eyebrow} title={props.title} intro={props.intro} />
+        <ul className={cx("grid grid-cols-2 gap-3 sm:gap-5", items.length >= 4 ? "lg:grid-cols-4" : "lg:grid-cols-3")}>
+          {items.map((item) => {
+            const image = safeImage(item.image?.url);
+            return (
+              <li key={item.title}>
+                <Link href={safeHref(item.link.href)!} className="group relative flex aspect-[3/4] flex-col justify-end overflow-hidden bg-brand-deep text-white">
+                  {image && (
+                    // eslint-disable-next-line @next/next/no-img-element
+                    <img {...responsiveImage(image, "(min-width: 1024px) 25vw, 50vw")} alt={item.image?.alt ?? ""} loading="lazy" className="absolute inset-0 size-full object-cover transition-transform duration-[1400ms] ease-out group-hover:scale-105" />
+                  )}
+                  <span aria-hidden className="absolute inset-0 bg-gradient-to-t from-black/75 via-black/25 to-transparent" />
+                  <span className="relative flex flex-col gap-2 p-4 sm:p-6">
+                    <span className="font-display text-2xl font-light sm:text-3xl">{item.title}</span>
+                    {item.text && <span className="hidden text-sm leading-relaxed text-white/85 sm:block">{item.text}</span>}
+                    <span className="pt-1 text-[0.62rem] font-medium uppercase tracking-[0.22em] text-white/90 underline decoration-white/40 underline-offset-8 transition-colors group-hover:decoration-white sm:text-[0.68rem]">
+                      {item.link.label}
+                    </span>
+                  </span>
+                </Link>
+              </li>
+            );
+          })}
+        </ul>
+      </Container>
+    </Section>
   );
 }

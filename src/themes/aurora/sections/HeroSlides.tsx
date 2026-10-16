@@ -1,6 +1,7 @@
 "use client";
 
 import { useEffect, useState } from "react";
+import { responsiveImage } from "@/engine/img";
 
 import { cx } from "../ui";
 
@@ -23,7 +24,7 @@ export function HeroSlides({ images }: { images: { url: string; alt: string }[] 
         // eslint-disable-next-line @next/next/no-img-element
         <img
           key={`${image.url}-${i === active ? "on" : "off"}`}
-          src={image.url}
+          {...responsiveImage(image.url, "100vw")}
           alt={i === 0 ? image.alt : ""}
           loading={i === 0 ? "eager" : "lazy"}
           fetchPriority={i === 0 ? "high" : "low"}

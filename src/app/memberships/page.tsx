@@ -1,11 +1,14 @@
 import type { Metadata } from "next";
+import { systemPageMetadata } from "@/engine/meta";
 import { notFound } from "next/navigation";
 
 import { getMemberships, getSite } from "@/engine/api";
 import { themeFor } from "@/themes";
 import { SystemPageFrame } from "@/themes/render";
 
-export const metadata: Metadata = { title: "Memberships", alternates: { canonical: "/memberships" } };
+export function generateMetadata(): Promise<Metadata> {
+  return systemPageMetadata("memberships", "Memberships", (site, w) => `Membership plans at ${site.name}${w}.`);
+}
 
 export default async function Route() {
   const site = await getSite();

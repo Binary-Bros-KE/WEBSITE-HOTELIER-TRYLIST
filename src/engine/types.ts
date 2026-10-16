@@ -44,6 +44,8 @@ export type Site = {
     longitude: number | null;
   };
   social: Record<string, string>;
+  /** Old addresses → new ones (absent on older APIs). */
+  redirects?: { from: string; to: string }[];
   features: SiteFeatures;
   /** Online booking rules (absent on responses from older APIs). */
   booking?: BookingRules;

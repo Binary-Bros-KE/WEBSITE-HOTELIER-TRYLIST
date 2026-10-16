@@ -1,4 +1,5 @@
 import Link from "next/link";
+import { responsiveImage } from "@/engine/img";
 
 import { formatMoney, unitLabel } from "@/engine/format";
 import { safeImage } from "@/engine/safe";
@@ -45,7 +46,7 @@ function RoomRow({ site, room, search, availability, index }: { site: Site; room
       <Link href={href} className={cx("group relative block aspect-[4/3] overflow-hidden bg-stone", index % 2 === 1 && "lg:order-2")}>
         {cover && (
           // eslint-disable-next-line @next/next/no-img-element
-          <img src={cover} alt={room.name} loading={index < 2 ? "eager" : "lazy"} className="size-full object-cover transition-transform duration-[1400ms] ease-out group-hover:scale-105" />
+          <img {...responsiveImage(cover, "(min-width: 1024px) 55vw, 100vw")} alt={room.name} loading={index < 2 ? "eager" : "lazy"} className="size-full object-cover transition-transform duration-[1400ms] ease-out group-hover:scale-105" />
         )}
       </Link>
       <div className="flex flex-col justify-center gap-6">
@@ -121,12 +122,12 @@ function Gallery({ room }: { room: RoomType }) {
   return (
     <div className={cx("grid gap-3", rest.length > 0 && "lg:grid-cols-[2fr_1fr]")}>
       {/* eslint-disable-next-line @next/next/no-img-element */}
-      <img src={first} alt={room.name} className="aspect-[4/3] w-full object-cover lg:aspect-auto lg:h-[34rem]" />
+      <img {...responsiveImage(first, "(min-width: 1024px) 66vw, 100vw")} alt={room.name} className="aspect-[4/3] w-full object-cover lg:aspect-auto lg:h-[34rem]" />
       {rest.length > 0 && (
         <div className={cx("grid gap-3", rest.length > 1 ? "grid-cols-2 lg:grid-cols-1 lg:grid-rows-2" : "")}>
           {rest.slice(0, 2).map((src, i) => (
             // eslint-disable-next-line @next/next/no-img-element
-            <img key={src + i} src={src} alt={`${room.name}, view ${i + 2}`} loading="lazy" className="aspect-[4/3] w-full object-cover lg:aspect-auto lg:h-full" />
+            <img key={src + i} {...responsiveImage(src, "(min-width: 1024px) 33vw, 50vw")} alt={`${room.name}, view ${i + 2}`} loading="lazy" className="aspect-[4/3] w-full object-cover lg:aspect-auto lg:h-full" />
           ))}
         </div>
       )}

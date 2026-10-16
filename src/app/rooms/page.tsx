@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import { systemPageMetadata } from "@/engine/meta";
 import { notFound } from "next/navigation";
 
 import { getAvailability, getRoomTypes, getSite } from "@/engine/api";
@@ -9,10 +10,9 @@ import { SystemPageFrame } from "@/themes/render";
 
 type Props = { searchParams: Promise<Record<string, string | string[] | undefined>> };
 
-export const metadata: Metadata = {
-  title: "Rooms & Suites",
-  alternates: { canonical: "/rooms" },
-};
+export function generateMetadata(): Promise<Metadata> {
+  return systemPageMetadata("rooms", "Rooms & Suites", (site, w) => `Rooms and suites at ${site.name}${w} — compare rates, check live availability and request your stay online.`);
+}
 
 export default async function RoomsRoute({ searchParams }: Props) {
   const site = await getSite();

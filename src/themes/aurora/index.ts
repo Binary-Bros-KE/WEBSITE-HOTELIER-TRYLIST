@@ -8,7 +8,7 @@ import { NotFound, PageTitle } from "./PageChrome";
 import { BookingPage, BookRoomPage, BookServicePage } from "./pages/booking";
 import { RoomPage, RoomsPage } from "./pages/rooms";
 import { ContactPage, DiningPage, MembershipsPage, ServicesPage } from "./pages/venue";
-import { Amenities, CallToAction, Faq, Gallery, ImageText, RichText, Testimonials } from "./sections/content";
+import { Amenities, CallToAction, Faq, Gallery, ImageText, Pathways, RichText, Testimonials } from "./sections/content";
 import { ContactMap, MembershipPlans, MenuHighlights, RoomsShowcase, ServicesShowcase } from "./sections/data";
 import { Hero } from "./sections/Hero";
 
@@ -42,6 +42,7 @@ export const aurora: Theme = {
     "membership-plans": MembershipPlans,
     amenities: Amenities,
     gallery: Gallery,
+    pathways: Pathways,
     testimonials: Testimonials,
     faq: Faq,
     cta: CallToAction,

@@ -1,4 +1,5 @@
 import Link from "next/link";
+import { responsiveImage } from "@/engine/img";
 
 import { formatMoney, unitLabel } from "@/engine/format";
 import { safeImage } from "@/engine/safe";
@@ -13,7 +14,7 @@ export function RoomCard({ room, currency, query = "" }: { room: RoomType; curre
       <div className="relative aspect-[4/5] overflow-hidden bg-stone">
         {cover && (
           // eslint-disable-next-line @next/next/no-img-element
-          <img src={cover} alt={room.name} loading="lazy" className="size-full object-cover transition-transform duration-[1400ms] ease-out group-hover:scale-105" />
+          <img {...responsiveImage(cover, "(min-width: 1024px) 33vw, (min-width: 640px) 50vw, 100vw")} alt={room.name} loading="lazy" className="size-full object-cover transition-transform duration-[1400ms] ease-out group-hover:scale-105" />
         )}
         <span className="absolute left-5 top-5 bg-paper/90 px-3 py-1.5 text-[0.65rem] uppercase tracking-[0.2em] text-ink">
           Sleeps {room.capacity}

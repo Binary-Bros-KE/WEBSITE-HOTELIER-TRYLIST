@@ -84,6 +84,16 @@ export const omega: SiteFixture = {
       instagram: "https://www.instagram.com/omegagardens_/",
       tiktok: "https://www.tiktok.com/tag/omegagardenhotelkaratina",
     },
+    // The previous site's addresses (see NODE/omega-website-redirects in production).
+    redirects: [
+      { from: "/accomodation", to: "/rooms" },
+      { from: "/restaurant-menu/*", to: "/dining" },
+      { from: "/bar-menu", to: "/dining" },
+      { from: "/bar", to: "/dining" },
+      { from: "/gym-and-spa", to: "/wellness" },
+      { from: "/wedding-grounds", to: "/events" },
+      { from: "/children-activities", to: "/" },
+    ],
     features: { rooms: true, roomBooking: true, menu: true, services: false, appointments: false, memberships: false, inquiries: true },
     nav: [
       { slug: "rooms", title: "Rooms & Suites", kind: "SYSTEM" },

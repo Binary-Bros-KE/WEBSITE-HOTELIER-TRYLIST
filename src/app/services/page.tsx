@@ -1,11 +1,14 @@
 import type { Metadata } from "next";
+import { systemPageMetadata } from "@/engine/meta";
 import { notFound } from "next/navigation";
 
 import { getServices, getSite } from "@/engine/api";
 import { themeFor } from "@/themes";
 import { SystemPageFrame } from "@/themes/render";
 
-export const metadata: Metadata = { title: "Wellness", alternates: { canonical: "/services" } };
+export function generateMetadata(): Promise<Metadata> {
+  return systemPageMetadata("services", "Wellness", (site, w) => `Spa, wellness and other services at ${site.name}${w}, with durations and prices.`);
+}
 
 export default async function Route() {
   const site = await getSite();
