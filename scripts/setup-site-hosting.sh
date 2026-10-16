@@ -51,7 +51,8 @@ ZONE_ID="$(cf "$CF/zones?name=${ZONE_NAME}" 2>/dev/null | jq -r '.result[0].id /
 [ -n "$ZONE_ID" ] || { echo "Token rejected, or it can't see the ${ZONE_NAME} zone — check its zone resources."; exit 1; }
 SERVER_IP="$(curl -fsS -4 https://ifconfig.me)"
 echo "    zone ${ZONE_ID}, server ${SERVER_IP}"
-echo "    zone SSL mode: $(cf "$CF/zones/${ZONE_ID}/settings/ssl" | jq -r '.result.value // "unknown"')"
+# Blank when the token can't read zone settings — harmless.
+echo "    zone SSL mode: $(cf "$CF/zones/${ZONE_ID}/settings/ssl" 2>/dev/null | jq -r '.result.value // empty' || true)"
 
 upsert_a() { # name proxied
   local name="$1" proxied="$2" id body
@@ -76,7 +77,13 @@ certbot certonly --non-interactive --agree-tos --keep-until-expiring \
   --deploy-hook "systemctl reload nginx"
 
 echo "==> 4. nginx"
-REAL_IP_LINES="$(curl -fsS https://www.cloudflare.com/ips-v4 https://www.cloudflare.com/ips-v6 | sed '/^$/d; s/^/    set_real_ip_from /; s/$/;/')"
+# Fetched separately with a newline after each: ips-v4 has no trailing newline,
+# which once glued its last range onto the first IPv6 range.
+REAL_IP_LINES="$( { curl -fsS https://www.cloudflare.com/ips-v4; echo; curl -fsS https://www.cloudflare.com/ips-v6; echo; } | tr -d '\r' | sed '/^\s*$/d; s/^/    set_real_ip_from /; s/$/;/')"
+# Every entry must be a CIDR — anything else would break nginx for every site.
+if echo "$REAL_IP_LINES" | grep -vqE '^    set_real_ip_from [0-9a-f:.]+/[0-9]+;$'; then
+  echo "Unexpected Cloudflare IP list — stopping before touching nginx."; exit 1
+fi
 cat > "$NGINX_SITE" <<NGINX
 # Tenant public websites -> hotelier-website (pm2) on 127.0.0.1:${WEB_PORT}.
 # Managed by WEBSITE-HOTELIER/scripts/setup-site-hosting.sh — edit there, not here.
@@ -118,7 +125,13 @@ ${REAL_IP_LINES}
 }
 NGINX
 ln -sf "$NGINX_SITE" /etc/nginx/sites-enabled/hotelier-sites
-nginx -t
+# Never leave a config behind that nginx rejects: it would block every later
+# reload (certificate renewals for all sites included).
+if ! nginx -t; then
+  rm -f /etc/nginx/sites-enabled/hotelier-sites
+  echo "nginx rejected the new site — removed it again; your other sites are untouched."
+  exit 1
+fi
 systemctl reload nginx
 
 echo "==> 5. API settings"
