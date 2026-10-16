@@ -38,6 +38,9 @@
     --brand-deep: color-mix(in oklab, var(--brand) 62%, #121210);
     --accent: color-mix(in oklab, var(--accent-raw, #b4935a) 72%, #c9b48c);
     --accent-soft: color-mix(in oklab, var(--accent) 16%, var(--paper));
+    /* The accent deepened for small text on light grounds (≥ 4.5:1 on paper);
+       rules and ornaments keep the lighter --accent. */
+    --accent-ink: color-mix(in oklab, var(--accent) 52%, var(--ink));
 
     --theme-font-display: var(--font-cormorant), "Cormorant Garamond", Georgia, serif;
     --theme-font-body: var(--font-jost), "Jost", system-ui, sans-serif;
@@ -67,6 +70,10 @@
     font-weight: 450;
     letter-spacing: 0.32em;
     text-transform: uppercase;
+    color: var(--accent-ink);
+  }
+  /* On the dark brand ground the light accent already reads well. */
+  .bg-brand-deep .aurora-eyebrow {
     color: var(--accent);
   }
 

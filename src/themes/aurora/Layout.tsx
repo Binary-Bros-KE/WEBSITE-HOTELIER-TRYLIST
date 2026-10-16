@@ -122,7 +122,7 @@ function Footer({ site, nav }: { site: Site; nav: { href: string; label: string 
           <p>© {year} {site.name}</p>
           <p className="flex gap-6">
             <Link href="/privacy" className="transition-colors hover:text-paper">Privacy</Link>
-            <span className="text-paper/45">Powered by Hotelier</span>
+            <span className="text-paper/65">Powered by Hotelier</span>
           </p>
         </Container>
       </div>
