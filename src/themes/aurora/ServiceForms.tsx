@@ -88,7 +88,8 @@ export function BookServiceForm({ service, currency, action }: { service: Servic
           </dl>
           <FormError state={state} />
           <SubmitButton pendingLabel="Sending request…" disabled={!time}>Request appointment</SubmitButton>
-          <p className="text-xs leading-relaxed text-ink-soft">Pay at your visit. Our team confirms your time shortly.</p>
+          <p className="text-xs leading-relaxed text-ink-soft">Pay at your visit. Our team confirms your time shortly.
+            <span className="mt-2 block">By sending this you agree to our <a href="/privacy" className="underline underline-offset-2 hover:text-ink">privacy notice</a>.</span></p>
         </div>
       </aside>
     </form>
@@ -121,6 +122,7 @@ export function InquiryForm({ action, sourcePage }: { action: FormAction; source
       <div className="flex flex-col gap-4 sm:col-span-2">
         <FormError state={state} />
         <SubmitButton pendingLabel="Sending…" className="w-fit">Send message</SubmitButton>
+        <p className="text-xs text-ink-soft">By sending this you agree to our <a href="/privacy" className="underline underline-offset-2 hover:text-ink">privacy notice</a>.</p>
       </div>
     </form>
   );

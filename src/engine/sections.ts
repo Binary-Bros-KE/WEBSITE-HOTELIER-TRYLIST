@@ -40,6 +40,8 @@ export const sectionSchemas = {
     body: text(),
     align: z.enum(["center", "left"]).default("center"),
     signature: optionalText,
+    /** Tighter spacing, for runs of text blocks (e.g. a policy page). */
+    compact: z.boolean().default(false),
   }),
 
   "image-text": z.object({

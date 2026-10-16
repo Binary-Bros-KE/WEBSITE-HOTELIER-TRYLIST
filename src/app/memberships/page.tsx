@@ -11,6 +11,8 @@ export default async function Route() {
   const site = await getSite();
   if (!site || !site.features.memberships) notFound();
   const data = await getMemberships();
+  // Nothing shown online yet: no empty "coming soon" page for search engines to find.
+  if (data.length === 0) notFound();
   const { pages } = themeFor(site.theme.key);
   return (
     <SystemPageFrame site={site} slug="memberships" title="Memberships">

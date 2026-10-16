@@ -120,7 +120,10 @@ function Footer({ site, nav }: { site: Site; nav: { href: string; label: string 
       <div className="border-t border-paper/10">
         <Container className="flex flex-col items-center justify-between gap-3 py-6 text-[0.7rem] tracking-[0.12em] sm:flex-row">
           <p>© {year} {site.name}</p>
-          <p className="text-paper/45">Powered by Hotelier</p>
+          <p className="flex gap-6">
+            <Link href="/privacy" className="transition-colors hover:text-paper">Privacy</Link>
+            <span className="text-paper/45">Powered by Hotelier</span>
+          </p>
         </Container>
       </div>
     </footer>

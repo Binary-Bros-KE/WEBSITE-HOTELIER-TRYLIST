@@ -138,6 +138,7 @@ export function BookRoomForm({ room, rateId, search, currency, rules, action }: 
           </SubmitButton>
           <p className="text-xs leading-relaxed text-ink-soft">
             This is a booking request — our team confirms it shortly and you&apos;ll hear from us.
+            <span className="mt-2 block">By sending this you agree to our <a href="/privacy" className="underline underline-offset-2 hover:text-ink">privacy notice</a>.</span>
           </p>
         </div>
       </aside>

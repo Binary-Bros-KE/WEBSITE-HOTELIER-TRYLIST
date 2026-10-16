@@ -65,6 +65,18 @@ export const getPage = cache(async (slug: string): Promise<Page | null> => {
   return (await apiGet<{ page: Page }>(`/pages/${encodeURIComponent(slug)}`))?.page ?? null;
 });
 
+/** Published pages for the sitemap. */
+export const getPageList = cache(async (): Promise<{ slug: string; kind: string; updatedAt: string }[]> => {
+  const demo = fixture();
+  if (demo) return demo.pages.map((p) => ({ slug: p.slug, kind: p.kind, updatedAt: new Date().toISOString() }));
+  return (await apiGet<{ pages: { slug: string; kind: string; updatedAt: string }[] }>("/pages"))?.pages ?? [];
+});
+
+/** The public origin for links search engines should use: the site's canonical host when known. */
+export async function siteOrigin(site: Site): Promise<string> {
+  return `https://${site.canonicalHost ?? (await siteHost())}`;
+}
+
 export const getRoomTypes = cache(async (): Promise<RoomType[]> => {
   const demo = fixture();
   if (demo) return demo.roomTypes;

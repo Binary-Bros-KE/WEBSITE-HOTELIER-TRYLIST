@@ -7,7 +7,7 @@ import { ArrowLink, ButtonLink, Container, cx, Section, SectionHeading } from ".
 export function RichText({ props }: SectionComponentProps<"rich-text">) {
   const center = props.align === "center";
   return (
-    <Section>
+    <Section className={props.compact ? "!py-10 sm:!py-14" : undefined}>
       <Container narrow className={cx("flex flex-col gap-10", center ? "items-center text-center" : "items-start")}>
         <SectionHeading eyebrow={props.eyebrow} title={props.title} intro={props.intro} align={props.align} />
         <div className="space-y-6 text-[1.0625rem] leading-[1.85] text-ink-soft">

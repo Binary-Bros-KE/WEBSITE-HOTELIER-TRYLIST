@@ -2,6 +2,7 @@ import type { Metadata, Viewport } from "next";
 import type { ReactNode } from "react";
 
 import { getSite } from "@/engine/api";
+import { Analytics } from "@/engine/Analytics";
 import { PreviewBadge } from "@/engine/preview";
 import { safeImage } from "@/engine/safe";
 import { themeFor } from "@/themes";
@@ -29,6 +30,8 @@ export async function generateMetadata(): Promise<Metadata> {
       images: og ? [{ url: og }] : undefined,
     },
     twitter: { card: og ? "summary_large_image" : "summary" },
+    // Draft previews must never be indexed.
+    ...(site.preview ? { robots: { index: false, follow: false } } : {}),
   };
 }
 
@@ -46,6 +49,7 @@ export default async function RootLayout({ children }: { children: ReactNode }) 
       <body>
         {site ? <theme.Layout site={site}>{children}</theme.Layout> : children}
         {site?.preview && <PreviewBadge />}
+        {site && !site.preview && site.analyticsId && /^[A-Z0-9-]{4,40}$/i.test(site.analyticsId) && <Analytics measurementId={site.analyticsId} />}
       </body>
     </html>
   );
