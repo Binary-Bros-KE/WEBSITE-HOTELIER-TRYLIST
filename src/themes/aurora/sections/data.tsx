@@ -1,5 +1,5 @@
 import { getMemberships, getMenu, getRoomTypes, getServices } from "@/engine/api";
-import { formatDuration, formatMoney, telHref } from "@/engine/format";
+import { formatDuration, formatMoney, formatPhone, joinAddress, telHref } from "@/engine/format";
 import { safeImage, safeMapEmbed } from "@/engine/safe";
 import type { SectionComponentProps } from "@/engine/theme";
 import type { MenuItem } from "@/engine/types";
@@ -165,9 +165,9 @@ export function ContactMap({ props, site }: SectionComponentProps<"contact-map">
   const c = site.contact;
   const map = props.showMap ? safeMapEmbed(c.mapEmbedUrl) : null;
   const rows: { label: string; value: string; href?: string }[] = [];
-  const address = [c.address, c.city, c.country].filter(Boolean).join(", ");
+  const address = joinAddress([c.address, c.city, c.country]);
   if (address) rows.push({ label: "Address", value: address });
-  if (c.phone) rows.push({ label: "Telephone", value: c.phone, href: telHref(c.phone) });
+  if (c.phone) rows.push({ label: "Telephone", value: formatPhone(c.phone), href: telHref(c.phone) });
   if (c.email) rows.push({ label: "Email", value: c.email, href: `mailto:${c.email}` });
   if (props.hours) rows.push({ label: "Hours", value: props.hours });
 

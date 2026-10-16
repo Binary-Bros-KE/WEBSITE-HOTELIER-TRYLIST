@@ -1,4 +1,4 @@
-import { formatDuration, formatMoney, telHref, whatsappHref } from "@/engine/format";
+import { formatDuration, formatMoney, formatPhone, telHref, whatsappHref } from "@/engine/format";
 import { safeHref, safeImage, safeMapEmbed } from "@/engine/safe";
 import { contactLinks } from "@/engine/stay";
 import type { ThemePages } from "@/engine/theme";
@@ -191,11 +191,11 @@ export const MembershipsPage: ThemePages["memberships"] = ({ site, plans }) => {
 export const ContactPage: ThemePages["contact"] = ({ site, inquiryAction }) => {
   const c = site.contact;
   const map = safeMapEmbed(c.mapEmbedUrl);
-  const address = [c.address, c.city, c.county, c.country].filter(Boolean);
+  const address = [c.address, c.city, c.county, c.country].map((p) => p?.trim().replace(/[.,;s]+$/, "")).filter((p): p is string => Boolean(p));
   const rows: { label: string; value: string; href?: string; external?: boolean }[] = [];
-  if (c.phone) rows.push({ label: "Telephone", value: c.phone, href: telHref(c.phone) });
-  if (c.alternativePhone) rows.push({ label: "Also", value: c.alternativePhone, href: telHref(c.alternativePhone) });
-  if (c.whatsapp) rows.push({ label: "WhatsApp", value: c.whatsapp, href: whatsappHref(c.whatsapp), external: true });
+  if (c.phone) rows.push({ label: "Telephone", value: formatPhone(c.phone), href: telHref(c.phone) });
+  if (c.alternativePhone) rows.push({ label: "Also", value: formatPhone(c.alternativePhone), href: telHref(c.alternativePhone) });
+  if (c.whatsapp) rows.push({ label: "WhatsApp", value: formatPhone(c.whatsapp), href: whatsappHref(c.whatsapp), external: true });
   if (c.email) rows.push({ label: "Email", value: c.email, href: `mailto:${c.email}` });
   const socials = Object.entries(site.social ?? {}).filter(([, url]) => safeHref(url));
   const directions = c.latitude != null && c.longitude != null

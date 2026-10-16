@@ -2,7 +2,7 @@ import Link from "next/link";
 import type { ReactNode } from "react";
 
 import { navFor } from "@/engine/defaults";
-import { telHref, whatsappHref } from "@/engine/format";
+import { formatPhone, joinAddress, telHref, whatsappHref } from "@/engine/format";
 import { safeHref, safeImage } from "@/engine/safe";
 import type { Site } from "@/engine/types";
 import { Header } from "./Header";
@@ -13,7 +13,7 @@ const hrefFor = (slug: string) => (slug === "home" ? "/" : `/${slug}`);
 
 function addressLine(site: Site): string | null {
   const c = site.contact;
-  return [c.address, c.city, c.country].filter(Boolean).join(", ") || null;
+  return joinAddress([c.address, c.city, c.country]) || null;
 }
 
 export function AuroraLayout({ site, children }: { site: Site; children: ReactNode }) {
@@ -33,7 +33,7 @@ export function AuroraLayout({ site, children }: { site: Site; children: ReactNo
         logoUrl={safeImage(site.branding.logoUrl)}
         nav={nav}
         cta={cta}
-        topBar={{ address: addressLine(site), phone, phoneHref: phone ? telHref(phone) : null, email }}
+        topBar={{ address: addressLine(site), phone: phone ? formatPhone(phone) : null, phoneHref: phone ? telHref(phone) : null, email }}
       />
       <main id="main" className="aurora-main">{children}</main>
       <Footer site={site} nav={nav} />
@@ -79,8 +79,8 @@ function Footer({ site, nav }: { site: Site; nav: { href: string; label: string 
           {(c.phone || c.alternativePhone || c.email) && <div>
             <h2 className="aurora-eyebrow mb-5">Contact</h2>
             <ul className="space-y-2">
-              {c.phone && <li><a href={telHref(c.phone)} className="transition-colors hover:text-paper">{c.phone}</a></li>}
-              {c.alternativePhone && <li><a href={telHref(c.alternativePhone)} className="transition-colors hover:text-paper">{c.alternativePhone}</a></li>}
+              {c.phone && <li><a href={telHref(c.phone)} className="transition-colors hover:text-paper">{formatPhone(c.phone)}</a></li>}
+              {c.alternativePhone && <li><a href={telHref(c.alternativePhone)} className="transition-colors hover:text-paper">{formatPhone(c.alternativePhone)}</a></li>}
               {c.email && <li><a href={`mailto:${c.email}`} className="transition-colors hover:text-paper">{c.email}</a></li>}
             </ul>
           </div>}

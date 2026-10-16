@@ -67,7 +67,7 @@ function RoomRow({ site, room, search, availability, index }: { site: Site; room
             From <span className="font-display text-3xl text-ink">{formatMoney(room.priceFrom, site.currency)}</span>
             {unit && <span> / {unit}</span>}
             <span className="block pt-1 text-[0.7rem] uppercase tracking-[0.16em]">
-              {search && bookable ? `${formatMoney(room.priceFrom * search.nights, site.currency)} for ${search.nights} night${search.nights === 1 ? "" : "s"}` : room.rates.length > 1 ? `${room.rates.length} meal plans` : ""}
+              {search && bookable ? `${formatMoney(room.priceFrom * search.nights, site.currency)} for ${search.nights} night${search.nights === 1 ? "" : "s"}` : room.rates.length > 1 ? `${room.rates.length} rates` : ""}
               {!room.pricesIncludeTax && " · excl. VAT"}
             </span>
           </p>

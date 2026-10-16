@@ -32,3 +32,20 @@ export function formatDuration(minutes: number | null | undefined): string | nul
 export function paragraphs(body: string | null | undefined): string[] {
   return (body ?? "").split(/\n\s*\n/).map((p) => p.trim()).filter(Boolean);
 }
+
+/** Readable phone numbers: Kenyan formats grouped ("0795 106 483",
+ * "+254 795 106 483"); anything else is shown as entered. */
+export function formatPhone(raw: string): string {
+  const digits = raw.replace(/[^\d+]/g, "");
+  let m = /^0(\d{3})(\d{3})(\d{3})$/.exec(digits);
+  if (m) return `0${m[1]} ${m[2]} ${m[3]}`;
+  m = /^\+?254(\d{3})(\d{3})(\d{3})$/.exec(digits);
+  if (m) return `+254 ${m[1]} ${m[2]} ${m[3]}`;
+  return raw.trim();
+}
+
+/** Joins address parts with commas, dropping each part's own trailing
+ * punctuation ("Highway." + "Karatina" → "Highway, Karatina"). */
+export function joinAddress(parts: (string | null | undefined)[]): string {
+  return parts.map((p) => p?.trim().replace(/[.,;\s]+$/, "")).filter(Boolean).join(", ");
+}
