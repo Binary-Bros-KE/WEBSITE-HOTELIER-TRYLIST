@@ -47,6 +47,7 @@ export function Header({ name, logoUrl, nav, cta, topBar }: HeaderProps) {
   const isActive = (href: string) => href !== "/" && (pathname === href || pathname.startsWith(`${href}/`));
 
   return (
+    <>
     <header className="aurora-header fixed inset-x-0 top-0 z-50" data-solid={solid ? "" : undefined}>
       <div className="aurora-topbar hidden items-center lg:flex">
         <div className="mx-auto flex w-full max-w-7xl items-center justify-between gap-8 px-8 text-[0.68rem] uppercase tracking-[0.22em]">
@@ -106,11 +107,15 @@ export function Header({ name, logoUrl, nav, cta, topBar }: HeaderProps) {
           </button>
         </div>
       </div>
+    </header>
 
+    {/* A sibling of <header>, not a child: the header's backdrop-filter makes it
+        the containing block for fixed descendants, which would squash this
+        full-screen panel into the header's 80px. */}
       <div
         id="aurora-menu"
         className={cx(
-          "fixed inset-x-0 bottom-0 top-20 overflow-y-auto bg-paper transition-[opacity,visibility] duration-300 lg:hidden",
+          "fixed inset-x-0 bottom-0 top-20 z-40 overflow-y-auto bg-paper transition-[opacity,visibility] duration-300 lg:hidden",
           open ? "visible opacity-100" : "invisible opacity-0",
         )}
       >
@@ -130,6 +135,6 @@ export function Header({ name, logoUrl, nav, cta, topBar }: HeaderProps) {
           )}
         </nav>
       </div>
-    </header>
+    </>
   );
 }
