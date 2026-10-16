@@ -11,6 +11,9 @@ concurrency:
 
 jobs:
   deploy:
+    # The VPS pulls from the TRYLIST repo, so only that copy deploys; the
+    # mirror (tanztechhub) skips instead of failing for want of VPS secrets.
+    if: github.repository == 'Binary-Bros-KE/WEBSITE-HOTELIER-TRYLIST'
     runs-on: ubuntu-latest
     steps:
       - name: Deploy over SSH
