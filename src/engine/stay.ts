@@ -1,4 +1,4 @@
-import { formatMoney } from "./format";
+import { formatMoney, formatPhone } from "./format";
 import type { Site, StaySearch } from "./types";
 
 // Room-search helpers shared by every theme: reading ?checkIn&checkOut&guests,
@@ -44,7 +44,7 @@ export function contactLinks(site: Site, subject: string, message: string, whats
   const c = site.contact;
   const links: ContactLink[] = [];
   if (c.whatsapp) links.push({ kind: "whatsapp", label: whatsappLabel, href: `https://wa.me/${c.whatsapp.replace(/\D/g, "")}?text=${encodeURIComponent(message)}` });
-  if (c.phone) links.push({ kind: "phone", label: `Call ${c.phone}`, href: `tel:${c.phone.replace(/[^\d+]/g, "")}` });
+  if (c.phone) links.push({ kind: "phone", label: `Call ${formatPhone(c.phone)}`, href: `tel:${c.phone.replace(/[^\d+]/g, "")}` });
   if (c.email) links.push({ kind: "email", label: "Email us", href: `mailto:${c.email}?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(message)}` });
   return links;
 }
